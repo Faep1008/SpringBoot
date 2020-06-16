@@ -13,11 +13,11 @@ import java.time.format.DateTimeFormatter;
 
 
 /**
+ * 测试Controller
  * 作者： Faep
  * 创建时间： 2020/6/16 15:16
  * 版本： [1.0, 2020/6/16]
- * 版权： 江苏国泰新点软件有限公司
- * 描述： <描述>
+ * 版权： Faep
  */
 @RestController
 @RequestMapping("/test")
