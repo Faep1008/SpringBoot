@@ -2,4 +2,4 @@
 SpringBoot 
 
 - SpringBoot Maven工程搭建
-- SpringBoot整个Log4j2
+- SpringBoot整合Log4j2
