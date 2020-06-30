@@ -1,4 +1,4 @@
-package com.faep.application;
+package com.faep;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
  * 描述： SpringBoot启动类
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.faep"})
 @MapperScan(basePackages = {"com.faep.mapper"})
 public class Application {
     public static void main(String[] args) {

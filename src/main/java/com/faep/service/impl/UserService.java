@@ -19,6 +19,7 @@ import java.util.List;
 public class UserService implements IUserService {
 
     @Autowired
+    @SuppressWarnings("all")
     private UserMapper userMapper;
 
     @Override
