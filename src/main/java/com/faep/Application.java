@@ -3,8 +3,6 @@ package com.faep;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 作者： Faep
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 @MapperScan(basePackages = {"com.faep.mapper"})
-@EnableTransactionManagement
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

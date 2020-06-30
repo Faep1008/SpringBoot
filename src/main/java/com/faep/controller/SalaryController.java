@@ -1,5 +1,7 @@
 package com.faep.controller;
 
+import com.faep.common.enums.ResultVO;
+import com.faep.common.enums.SalaryType;
 import com.faep.entity.SalaryDetail;
 import com.faep.service.api.ISalaryDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +38,13 @@ public class SalaryController {
             salaryDetail.setIncome(new BigDecimal(888));
             salaryDetail.setOutlay(new BigDecimal(222));
             salaryDetail.setOpratedate(new Date());
-            salaryDetail.setType("2");
+            salaryDetail.setType(SalaryType.支出.getValue());
             salaryDetail.setUserguid("744396a7-f65d-4020-9aaf-fa6e93b29f30");
             salaryDetailService.addSalaryRecord(salaryDetail);
-            return "OK";
+            return ResultVO.成功.getValue();
         }
         catch (Exception e){
-            return e.getMessage();
+            return ResultVO.失败.getValue() + ":" + e.getMessage();
         }
     }
 
