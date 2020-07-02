@@ -22,6 +22,19 @@ spring:
       min-evictable-idle-time-millis: 30000
       filters: stat
       async-init: true
+  quartz:
+    #相关属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: DefaultQuartzScheduler
+            instanceId: AUTO
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
 
 ## 该配置节点为独立的节点，如果将这个配置放在spring的节点下，会导致配置无法被识别
 mybatis:

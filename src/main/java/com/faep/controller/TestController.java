@@ -1,50 +1,44 @@
 package com.faep.controller;
 
-import com.faep.entity.User;
-import com.faep.service.api.IUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.UUID;
-
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 测试Controller
+ * 描述： [ ]
  * 作者： Faep
- * 创建时间： 2020/6/16 15:16
- * 版本： [1.0, 2020/6/16]
+ * 创建时间： 2020/7/2 8:41
+ * 版本： [1.0, 2020/7/2]
  * 版权： Faep
  */
 @RestController
 @RequestMapping("/test")
 public class TestController {
 
-    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
+    private static Lock lock1 = new ReentrantLock();
+    private static Lock lock2 = new ReentrantLock();
 
-    @Autowired
-    private IUserService userService;
+    /**
+     * 测试生成线程快照
+     */
+    @RequestMapping(value = "/thread", method = RequestMethod.GET)
+    public String testThreadSnapShot() {
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test(){
-        User user = new User();
-        user.setRowguid(UUID.randomUUID().toString());
-        user.setUsername("Faep");
-        user.setLoginid("Faep");
-        user.setPassword("11111");
-        user.setLastlogintime(new Date());
-        user.setPhone("18888888888");
-        user.setEnabled("1");
-        userService.addNewUser(user);
-
-        logger.info(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "-接口被调用");
-        return "新增用户成功！";
+        for (int i = 0; i < 10; i++) {
+            Thread t = new Thread(() -> {
+                try {
+                    Thread.sleep(20000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() + "执行完毕！");
+            });
+            t.start();
+        }
+        return "OK";
     }
 
 }
