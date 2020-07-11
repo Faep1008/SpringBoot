@@ -15,8 +15,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * 版权： Faep
  */
 @RestController
-@RequestMapping("/test")
-public class TestController {
+@RequestMapping("/testthread")
+public class TestController
+{
 
     private static Lock lock1 = new ReentrantLock();
     private static Lock lock2 = new ReentrantLock();
@@ -24,20 +25,58 @@ public class TestController {
     /**
      * 测试生成线程快照
      */
-    @RequestMapping(value = "/thread", method = RequestMethod.GET)
+    @RequestMapping(value = "/threadsleep", method = RequestMethod.GET)
     public String testThreadSnapShot() {
 
         for (int i = 0; i < 10; i++) {
             Thread t = new Thread(() -> {
                 try {
                     Thread.sleep(20000);
-                } catch (InterruptedException e) {
+                }
+                catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 System.out.println(Thread.currentThread().getName() + "执行完毕！");
             });
             t.start();
         }
+        return "OK";
+    }
+
+    /**
+     * 测试线程死锁
+     */
+    @RequestMapping(value = "/threaddeadlock", method = RequestMethod.GET)
+    public String testThreadDeadLock() {
+
+        new Thread(() -> {
+            synchronized (lock1) {
+                try {
+                    Thread.sleep(5000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (lock2) {
+                    System.out.println("线程一。。。。");
+                }
+            }
+        }).start();
+
+        new Thread(() -> {
+            synchronized (lock2) {
+                try {
+                    Thread.sleep(5000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (lock1) {
+                    System.out.println("线程一。。。。");
+                }
+            }
+        }).start();
+
         return "OK";
     }
 
