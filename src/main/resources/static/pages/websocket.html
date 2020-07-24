@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>websocket测试</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="/static/pages/atmosphere.jsatmosphere.js"></script>
+    <style type="text/css">
+        h3,h4{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+
+<h3>WebSocket测试，客户端接收到的消息如下：</h3>
+
+<textarea id = "messageId" readonly="readonly" cols="150" rows="30" >
+
+</textarea>
+
+<script>
+    $(function(){
+        var pbMsgSocket = new PBMsgSocket("111", "Faep", "aaaa");
+    })
+</script>
+
+<script type="text/javascript">
+    function PBMsgSocket(uid, uname, biaoduan) {
+        var socket = atmosphere;
+        var subSocket;
+        var transport = 'websocket';
+        var isconnect = '0';
+        var websocketUrl = 'http://localhost:8099/websocket/test';
+
+        var request = {
+            url : websocketUrl,
+            contentType : "application/json",
+            transport : transport,
+            reconnectInterval : 5000,
+            headers : {
+                "from_uid" : uid,
+                "from_name" : uname,
+                "biaoduan":biaoduan
+            }
+        };
+        request.onTransportFailure = function(errorMsg, request) {
+            request.fallbackTransport = "long-polling";
+            transport = "long-polling";
+        };
+        request.onMessage = function(response) {
+            var msgStr = response.responseBody;
+            try {
+                // if (transport == "long-polling") { // 处理在长轮训的情况下，可能请求到多条消息
+                //     msgStr = "[" + msgStr.replace(/}{/g, '},{') + "]";
+                //     var msgObj = atmosphere.util.parseJSON(msgStr);
+                //     $.each(msgObj, function(i, e) {
+                //         handleMsgObj(e);
+                //     });
+                // } else {
+                var msgObj = atmosphere.util.parseJSON(msgStr);
+                handleMsgObj(msgObj);
+                // }
+            } catch (e) {
+                return;
+            }
+        };
+        request.onOpen = function(response) {
+            isconnect = '1';
+        };
+
+        var handleMsgObj = function(msgObj) {
+            console.log(msgObj);
+            if ("111" == msgObj.from_uid) {
+                $("#messageId").val($("#messageId").val() + "\r\n" + msgObj.from_name);
+            }
+        };
+
+        var errorMsg = function(msg) {
+            mini.showTips({
+                content : msg,
+                state : "danger",
+                x : "center",
+                y : "center",
+                timeout : 2000
+            });
+        };
+
+        request.onClose = function(response) {
+            isconnect = '0';
+            setTimeout(function() {
+                var tm = setInterval(function() {
+                    if (isconnect == '0') {
+                        errorMsg("websocket已断开连接，请尝试重新登录！");
+                    } else {
+                        clearInterval(tm);
+                    }
+                }, 30000);
+            }, 3000);
+        };
+
+        request.onError = function(response) {
+            isconnect = '0';
+            setTimeout(function() {
+                errorMsg("websocket连接出现错误，请联系管理员！");
+            }, 3000);
+        };
+
+        request.onReconnect = function(request, response) {
+            isconnect = '1';
+        };
+
+        subSocket = socket.subscribe(request);
+
+        this.sendMessage = function(message) {
+            if (!subSocket.request.isOpen) {
+                errorMsg("websocket已断开连接，无法发送消息！");
+                return false;
+            }
+            subSocket.push(message);
+            return true;
+        };
+        this.isConnect = function() {
+            return subSocket.request.isOpen;
+        };
+        this.close = function() {
+            socket.unsubscribe();
+        };
+        this.uid = uid;
+    }
+</script>
+
+</body>
+</html>

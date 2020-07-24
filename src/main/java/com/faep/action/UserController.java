@@ -1,4 +1,4 @@
-package com.faep.controller;
+package com.faep.action;
 
 import com.faep.entity.User;
 import com.faep.service.api.IUserService;
@@ -45,6 +45,12 @@ public class UserController {
 
         logger.info(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "-接口被调用");
         return "新增用户成功！";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(){
+
+        return "login";
     }
 
 }

@@ -1,4 +1,4 @@
-package com.faep.controller;
+package com.faep.action;
 
 import com.faep.common.enums.ResultVO;
 import com.faep.common.enums.SalaryType;

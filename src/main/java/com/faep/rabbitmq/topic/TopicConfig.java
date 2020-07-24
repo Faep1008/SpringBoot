@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * 版本： [1.0, 2020/7/7]
  * 版权： Faep
  */
-@Configuration
+//@Configuration
 public class TopicConfig
 {
 

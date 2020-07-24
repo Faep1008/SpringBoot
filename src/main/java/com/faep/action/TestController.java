@@ -1,4 +1,4 @@
-package com.faep.controller;
+package com.faep.action;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

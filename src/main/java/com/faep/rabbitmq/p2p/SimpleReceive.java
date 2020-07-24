@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
  * 版本： [1.0, 2020/7/7]
  * 版权： Faep
  */
-@Component
-@RabbitListener(queues = "simple")
+//@Component
+//@RabbitListener(queues = "simple")
 public class SimpleReceive {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * 版本： [1.0, 2020/7/7]
  * 版权： Faep
  */
-@Component
+//@Component
 public class SimpleSend {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
