@@ -27,10 +27,10 @@ public class WebFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }
-        System.out.println("Filter URI=====111======" + uri);
+        //System.out.println("Filter URI=====111======" + uri);
         if (!uri.endsWith(".html")){
             uri = uri + ".html";
-            System.out.println("Filter URI=====222======" + uri);
+            //System.out.println("Filter URI=====222======" + uri);
             req.getRequestDispatcher(uri).forward(request, response);
         }
     }

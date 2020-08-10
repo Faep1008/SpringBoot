@@ -11,15 +11,16 @@ import org.atmosphere.config.service.*;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEvent;
 import org.atmosphere.cpr.Broadcaster;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
- * 描述： WebSocket的处理类，这个处理类需要使用@ServerEndpoint，这个类里监听连接的建立关闭、消息的接收等
+ * 描述： WebSocket的处理类，这个类里监听连接的建立关闭、消息的接收等
  * 作者： Faep
  * 创建时间： 2020/7/23 10:08
  * 版本： [1.0, 2020/7/23]
  * 版权： Faep
  */
-@ManagedService(path = "/websocket/test", atmosphereConfig = {
+@ManagedService(path = "/websocket/test/{biaoduan}", atmosphereConfig = {
         "org.atmosphere.cpr.CometSupport.maxInactiveActivity=120000" }, broadcastFilters = {MessageFilter.class })
 public class WebSocketServer
 {
@@ -29,12 +30,16 @@ public class WebSocketServer
     @Inject
     private AtmosphereResource r;
 
+    @PathParam("biaoduan")
+    private String biaoduan;
+
     /**
      * 注入broadcaster组件，这个对象可以用来发送广播消息，API:broadcaster.broadcast(json)，
      * 会往所有用户推送一条消息。对外开放的api可以单独写个public方法来实现，方法内部调用这个私有变量。
      */
     @Inject
-    @Named("/websocket/test")
+    @PathParam("biaoduan")
+    @Named("/websocket/test/{biaoduan}")
     private static Broadcaster broadcaster;
 
     /**
@@ -42,7 +47,7 @@ public class WebSocketServer
      */
     @Ready
     public void onReady() {
-        System.out.println("进入onReady。。。");
+        System.out.println("进入onReady。。。biaoduan = " +biaoduan );
     }
 
     /**
@@ -81,9 +86,9 @@ public class WebSocketServer
      * @param json
      */
     public static void broadcast(String json) {
-        if (WebSocketServer.broadcaster != null) {
+        if (broadcaster != null) {
             try {
-                WebSocketServer.broadcaster.broadcast(json);
+                broadcaster.broadcast(json);
             }
             catch (Exception e) {
                 e.printStackTrace();

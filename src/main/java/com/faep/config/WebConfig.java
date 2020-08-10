@@ -30,7 +30,7 @@ public class WebConfig {
      * 注册过滤器
      * @return
      */
-    @Bean
+    //@Bean
     public FilterRegistrationBean filterRegistrationBean(){
         FilterRegistrationBean registration = new FilterRegistrationBean(new WebFilter());
         registration.addUrlPatterns("/*");
