@@ -25,9 +25,10 @@ spring:
 #  resources:
 #    static-locations: classpath:/static   #访问静态页面
   mvc:
-    view:
-      suffix: .html
-      prefix: /pages/
+    static-path-pattern: /**
+#    view:
+#      suffix: .html
+#      prefix: /pages/
   quartz:
     #相关属性配置
     properties:
