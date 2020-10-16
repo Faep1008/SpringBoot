@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 描述： [ ]
+ * 描述： 系统配置，相当于web.xml
  * 作者： Faep
  * 创建时间： 2020/7/24 13:49
  * 版本： [1.0, 2020/7/24]
