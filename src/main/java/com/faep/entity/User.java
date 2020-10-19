@@ -17,6 +17,7 @@ public class User {
     String password;
     String phone;
     Date lastlogintime;
+    String roles;
     String enabled;
 
     public User() {

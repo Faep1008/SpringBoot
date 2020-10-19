@@ -45,4 +45,19 @@ public interface UserMapper {
     @Select("select * from user")
     List<User> findAllUsers();
 
+    /**
+     * 根据登录名获取用户
+     * @param loginid
+     * @return
+     */
+    @Select("select * from user where loginid=#{loginid}")
+    User findUserByLoginId(String loginid);
+
+    /**
+     * 根据手机号获取用户
+     * @param phone
+     * @return
+     */
+    @Select("select * from user where phone=#{phone}")
+    User findUserByPhone(String phone);
 }

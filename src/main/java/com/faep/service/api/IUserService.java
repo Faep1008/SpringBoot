@@ -45,4 +45,18 @@ public interface IUserService {
      * @return
      */
     List<User> findAllUsers();
+
+    /**
+     * 根据登录名获取用户
+     * @param loginid
+     * @return
+     */
+    User findUserByLoginId(String loginid);
+
+    /**
+     * 根据手机号获取用户
+     * @param phone
+     * @return
+     */
+    User findUserByPhone(String phone);
 }

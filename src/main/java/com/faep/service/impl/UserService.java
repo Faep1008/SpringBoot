@@ -46,4 +46,14 @@ public class UserService implements IUserService {
     public List<User> findAllUsers() {
         return userMapper.findAllUsers();
     }
+
+    @Override
+    public User findUserByLoginId(String loginid) {
+        return userMapper.findUserByLoginId(loginid);
+    }
+
+    @Override
+    public User findUserByPhone(String phone) {
+        return userMapper.findUserByPhone(phone);
+    }
 }
