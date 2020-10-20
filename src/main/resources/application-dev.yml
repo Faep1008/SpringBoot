@@ -72,3 +72,12 @@ frame:
     deny:
     #Druid访问地址
     urlmappings: /druid/*
+
+  #系统配置
+  config:
+    #免校验的静态资源后缀，多个用;分隔
+    skipFilterSuffix: ico;css;js;map;
+    #无需登录就可访问的页面
+    noNeedAuthPages: login/login;register/regist;
+    #不需要登录就能访问的action方法
+    noNeedAuthActions: user/login;user/adduser;

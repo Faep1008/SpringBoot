@@ -11,26 +11,28 @@ import java.util.Date;
  */
 public class User {
 
-    String rowguid;
-    String username;
-    String loginid;
-    String password;
-    String phone;
-    Date lastlogintime;
-    String roles;
-    String enabled;
+    private String rowguid;
+    private String username;
+    private String loginid;
+    private String password;
+    private String phone;
+    private Date lastlogintime;
+    private String roles;
+    private String locked;
+    private int ordernum;
+    private String remark;
 
     public User() {
     }
 
-    public User(String rowguid, String username, String loginid, String password, String phone, Date lastlogintime, String enabled) {
+    public User(String rowguid, String username, String loginid, String password, String phone, Date lastlogintime, String locked) {
         this.rowguid = rowguid;
         this.username = username;
         this.loginid = loginid;
         this.password = password;
         this.phone = phone;
         this.lastlogintime = lastlogintime;
-        this.enabled = enabled;
+        this.locked = locked;
     }
 
     public String getRowguid() {
@@ -81,11 +83,35 @@ public class User {
         this.lastlogintime = lastlogintime;
     }
 
-    public String getEnabled() {
-        return enabled;
+    public String getLocked() {
+        return locked;
     }
 
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
+    public void setLocked(String locked) {
+        this.locked = locked;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public int getOrdernum() {
+        return ordernum;
+    }
+
+    public void setOrdernum(int ordernum) {
+        this.ordernum = ordernum;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

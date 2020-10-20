@@ -5,11 +5,13 @@ import com.faep.filter.WebFilter;
 import com.faep.vo.DruidConfigVo;
 import org.atmosphere.cpr.AtmosphereServlet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,13 +28,17 @@ public class WebConfig {
     @Autowired
     private DruidConfigVo druidConfigVo;
 
+    @Autowired
+    @Qualifier("webFilter")
+    private Filter webFilter;
+
     /**
      * 注册过滤器
      * @return
      */
-    //@Bean
+    @Bean
     public FilterRegistrationBean filterRegistrationBean(){
-        FilterRegistrationBean registration = new FilterRegistrationBean(new WebFilter());
+        FilterRegistrationBean registration = new FilterRegistrationBean(webFilter);
         registration.addUrlPatterns("/*");
         registration.setName("WebFilter");
         registration.setAsyncSupported(true);

@@ -1,10 +1,18 @@
 package com.faep.filter;
 
 
+import com.faep.vo.FrameConfigVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
 import java.io.IOException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * 描述： 个性化过滤器
@@ -13,7 +21,12 @@ import javax.servlet.http.HttpServletRequest;
  * 版本： [1.0, 2020/7/24]
  * 版权： Faep
  */
+@Component("webFilter")
 public class WebFilter implements Filter {
+
+    @Autowired
+    FrameConfigVo frameConfig;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -22,16 +35,48 @@ public class WebFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
         String uri = req.getRequestURI();
-        if (!uri.startsWith("/pages")){
-            chain.doFilter(request, response);
-            return;
+
+        // 无需登录就可访问的页面
+        String[] noNeedAuthPages = frameConfig.getNoNeedAuthPages().split(";");
+        for (String authPage : noNeedAuthPages) {
+            if (uri.contains(authPage)){
+                chain.doFilter(request, response);
+                return;
+            }
         }
-        //System.out.println("Filter URI=====111======" + uri);
-        if (!uri.endsWith(".html")){
-            uri = uri + ".html";
-            //System.out.println("Filter URI=====222======" + uri);
-            req.getRequestDispatcher(uri).forward(request, response);
+
+        // 不需要登录就能访问的action方法
+        String[] noNeedAuthActions = frameConfig.getNoNeedAuthActions().split(";");
+        for (String authAction : noNeedAuthActions) {
+            if (uri.contains(authAction)){
+                chain.doFilter(request, response);
+                return;
+            }
+        }
+
+        // 无需判断登录就可访问的资源后缀
+        String skipFilterSuffix = frameConfig.getSkipFilterSuffix();
+        if(!StringUtils.isEmpty(skipFilterSuffix)){
+            String[] skipFilterSuffixs = skipFilterSuffix.split(";");
+            for (String suffix : skipFilterSuffixs) {
+                if (uri.endsWith(suffix)){
+                    chain.doFilter(request, response);
+                    return;
+                }
+            }
+        }
+
+        HttpSession session = req.getSession();
+        String username = (String) session.getAttribute("username");
+        if(StringUtils.isEmpty(username)){
+            // 未登录直接跳回登录页面
+            resp.sendRedirect("/pages/login/login.html");
+        }
+        else{
+            // 登陆成功直接跳转
+            chain.doFilter(request, response);
         }
     }
 
