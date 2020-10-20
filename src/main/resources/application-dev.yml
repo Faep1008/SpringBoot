@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: 11111
-    url: jdbc:mysql://localhost:3306/springboot?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/springboot?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -76,7 +76,7 @@ frame:
   #系统配置
   config:
     #免校验的静态资源后缀，多个用;分隔
-    skipFilterSuffix: ico;css;js;map;
+    skipFilterSuffix: ico;css;js;map;jpg;gif;png;
     #无需登录就可访问的页面
     noNeedAuthPages: login/login;register/regist;
     #不需要登录就能访问的action方法

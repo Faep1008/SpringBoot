@@ -21,18 +21,25 @@ public class User {
     private String locked;
     private int ordernum;
     private String remark;
+    private Date birthday;
+    private String email;
 
     public User() {
     }
 
-    public User(String rowguid, String username, String loginid, String password, String phone, Date lastlogintime, String locked) {
+    public User(String rowguid, String username, String loginid, String password, String phone, Date lastlogintime, String roles, String locked, int ordernum, String remark, Date birthday, String email) {
         this.rowguid = rowguid;
         this.username = username;
         this.loginid = loginid;
         this.password = password;
         this.phone = phone;
         this.lastlogintime = lastlogintime;
+        this.roles = roles;
         this.locked = locked;
+        this.ordernum = ordernum;
+        this.remark = remark;
+        this.birthday = birthday;
+        this.email = email;
     }
 
     public String getRowguid() {
@@ -113,5 +120,21 @@ public class User {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

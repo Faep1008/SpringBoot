@@ -18,7 +18,7 @@ public interface UserMapper {
     /**
      * 新增一个用户
      */
-    @Insert("insert into user values (#{rowguid}, #{username}, #{loginid}, #{password}, #{phone}, #{lastlogintime}, #{enabled})")
+    @Insert("insert into user values (#{rowguid}, #{username}, #{loginid}, #{password}, #{phone}, #{lastlogintime}, #{locked}, #{roles}, #{ordernum}, #{remark}, #{birthday}, #{email})")
     int addNewUser(User user);
 
     /**
