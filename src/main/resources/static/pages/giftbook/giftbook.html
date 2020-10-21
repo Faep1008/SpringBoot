@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>礼簿列表</title>
+    <link rel="stylesheet" href="../bootstrap-dist/css/bootstrap.css">
+    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script src="../bootstrap-dist/js/bootstrap.bundle.js" type="text/javascript"></script>
+    <style>
+        #container {
+            width: 90%;
+            margin-left: 5%;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div style="padding-top: 10px;">
+        <form class="form-inline my-2 my-lg-0">
+            <div class="form-group mb-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="新增礼簿">新增礼簿
+                </button>
+                <span>&nbsp;</span>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="新增礼项">新增礼项
+                </button>
+                <span>&nbsp;</span>
+                <div class="dropdown">
+                    <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        选择礼簿
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="giftbooks">
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-2" style="width: 500px; margin-left: 20px;">
+                <span id="giftnametext"></span>
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" id="search_username" class="form-control mr-sm-2" placeholder="输入姓名搜索">
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchName()" type="button">搜索</button>
+            </div>
+        </form>
+    </div>
+
+    <div style="">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th scope="col" style="width: 80px; text-align: center">序号</th>
+                <th scope="col" style="width: 150px;text-align: center">姓名</th>
+                <th scope="col" style="width: 120px;text-align: center">金额</th>
+                <th scope="col" style="width: 250px;text-align: center">大写金额</th>
+                <th scope="col" style="text-align: center">备注</th>
+                <th scope="col" style="width: 80px;text-align: center">修改</th>
+            </tr>
+            </thead>
+            <tbody id="bookitem-list">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row" id="bookmainform">
+                        <div class="form-group col-md-6">
+                            <label for="bookname" class="col-form-label">礼簿名称:</label>
+                            <input type="text" class="form-control" id="bookname">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="occurdate" class="col-form-label">发生日期:</label>
+                            <input type="text" class="form-control" id="occurdate">
+                        </div>
+                    </div>
+                    <div class="form-row" id="bookitemform">
+                        <div class="form-group col-md-6">
+                            <label for="username" class="col-form-label">随礼人姓名:</label>
+                            <input type="text" class="form-control" id="username">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="money" class="col-form-label">随礼金额:</label>
+                            <input type="text" class="form-control" id="money">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remark" class="col-form-label">备注:</label>
+                        <textarea class="form-control" id="remark"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="addgiftbook()">提交新增</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display: none">
+    <input type="text" id="bookguid">
+    <input type="text" id="itemguid">
+</div>
+
+<script src="../bootstrap-dist/js/bootstrap.js"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+<script src="../js/mustache.js" type="text/javascript"></script>
+<script src="../js/mustacheextends.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        initGiftbooks();
+    })
+
+    function initGiftbooks() {
+        faep.execute("giftbook/findallbookmain", null, function (ret) {
+            $("#giftbooks").empty();
+            var data = {"giftbooks": ret};
+            var userListHtml = htmlRender($("#giftbooks-template").html(), data);
+            $("#giftbooks").html(userListHtml);
+        });
+    }
+
+    function initGiftbookitems() {
+        // 刷新表格
+        faep.execute("giftbook/findbookitems", faep.setParams(["bookguid", "username"]), function (ret) {
+            $("#bookitem-list").empty();
+            var data = {"bookitems": ret};
+            var userListHtml = htmlRender($("#giftbookitems-template").html(), data);
+            $("#bookitem-list").html(userListHtml);
+        });
+    }
+
+    // 新增礼簿主体（1）还是具体项（2）
+    var operateType;
+    // 当前礼簿ID
+    var curGiftBookGuid;
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+
+        $("#bookname").val("");
+        $("#occurdate").val("");
+        $("#username").val("");
+        $("#money").val("");
+        $("#remark").val("");
+
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(recipient);
+        if (recipient == '新增礼簿') {
+            operateType = 1;
+            $("#bookmainform").show();
+            $("#bookitemform").hide();
+        } else {
+            operateType = 2;
+            $("#bookitemform").show();
+            $("#bookmainform").hide();
+        }
+
+    });
+
+    // 点击礼簿下拉项监听
+    function opengiftbookdetails(bookguid, bookname, occrdate) {
+        curGiftBookGuid = bookguid;
+        $("#bookguid").val(bookguid);
+        if (occrdate.length > 10) {
+            occrdate = occrdate.substring(0, 10);
+        }
+
+        faep.execute("giftbook/getgiftbookinfo", faep.setParams(["bookguid"]), function (ret) {
+            // 刷新文本区域
+            $("#giftnametext").html("<b>" + bookname + "</b>, 日期：" + occrdate + ", " + ret);
+        });
+
+        searchName();
+    }
+
+    function searchName() {
+        $("#username").val($("#search_username").val());
+        initGiftbookitems();
+    }
+
+    function addgiftbook() {
+        if (operateType == 1) {
+            faep.execute("giftbook/addbookmain", faep.setParams(["bookname", "occurdate", "remark"]), function (ret) {
+                faep.alert(ret);
+            });
+        } else if (operateType == 2) {
+            faep.execute("giftbook/addbookitem", faep.setParams(["bookguid", "username", "money", "remark"]), function (ret) {
+                $("#username").val("");
+                $("#money").val("");
+                $("#remark").val("");
+                initGiftbookitems();
+                faep.alert(ret);
+            });
+        } else if (operateType == 3) {
+            faep.execute("giftbook/updatebookitem", faep.setParams(["itemguid", "username", "money", "remark"]), function (ret) {
+                $("#itemguid").val("");
+                $("#username").val("");
+                $("#money").val("");
+                $("#remark").val("");
+                initGiftbookitems();
+                faep.alert(ret);
+                $('#exampleModal').modal('hide');
+                operateType = null;
+            });
+        } else {
+            faep.alert("新增异常！");
+        }
+    }
+
+    // 修改按钮
+    function edititem(itemguid, username, money, remark) {
+        $("#bookitemform").show();
+        $("#bookmainform").hide();
+        $('#exampleModal').modal('show');
+        $('#exampleModal').find('.modal-title').text("修改信息");
+
+        $("#itemguid").val(itemguid);
+        $("#username").val(username);
+        $("#money").val(money);
+        $("#remark").val(remark);
+        operateType = 3;
+    }
+</script>
+<script type="text/x-template" id="giftbooks-template">
+    {{#giftbooks}}
+    <a class="dropdown-item" href="javascript:void(0)"
+       onclick="opengiftbookdetails('{{bookguid}}','{{bookname}}','{{occurdate}}')">{{bookname}}</a>
+    {{/giftbooks}}
+</script>
+
+<script type="text/x-template" id="giftbookitems-template">
+    {{#bookitems}}
+    <tr>
+        <td scope="row" style="text-align: center">{{ordernum}}</td>
+        <td style="text-align: center">{{username}}</td>
+        <td style="text-align: center">{{money}}</td>
+        <td>{{uppermoney}}</td>
+        <td>{{remark}}</td>
+        <td style="text-align: center">
+            <svg style="cursor: pointer;" onclick="edititem('{{itemguid}}', '{{username}}', '{{money}}', '{{remark}}')"
+                 width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+        </td>
+    </tr>
+    {{/bookitems}}
+</script>
+</body>
+</html>

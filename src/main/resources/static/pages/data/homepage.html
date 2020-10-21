@@ -28,10 +28,10 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
+                            其他功能
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="opengiftbook()">礼簿记录</a>
                             <a class="dropdown-item" href="#">Another action</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Something else here</a>
@@ -83,6 +83,11 @@
 
     function openUser(userguid){
         faep.alert(userguid);
+    }
+
+    // 打开礼簿
+    function opengiftbook(){
+        $("#iframe").attr("src", "../giftbook/giftbook.html");
     }
 
     // 注销
