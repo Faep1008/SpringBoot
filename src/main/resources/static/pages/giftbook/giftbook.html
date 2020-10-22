@@ -195,6 +195,10 @@
     }
 
     function searchName() {
+        if(!curGiftBookGuid){
+            faep.alert("先选择礼簿！");
+            return;
+        }
         $("#username").val($("#search_username").val());
         initGiftbookitems();
     }

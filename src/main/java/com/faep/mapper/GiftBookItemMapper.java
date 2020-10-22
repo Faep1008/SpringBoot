@@ -36,7 +36,7 @@ public interface GiftBookItemMapper
      * @param username
      * @return
      */
-    @Select("SELECT * from GiftBookItem where bookguid=#{arg0} and username like concat('%',#{arg1},'%')")
+    @Select("SELECT * from GiftBookItem where bookguid=#{arg0} and username like concat('%',#{arg1},'%') order by money desc")
     List<GiftBookItem> findGiftItemByUserName(String bookguid, String username);
 
     /**
@@ -46,7 +46,7 @@ public interface GiftBookItemMapper
      * @param username
      * @return
      */
-    @Select("SELECT * from GiftBookItem where bookguid=#{bookguid}")
+    @Select("SELECT * from GiftBookItem where bookguid=#{bookguid} order by money desc")
     List<GiftBookItem> findGiftItemByBookMain(String bookguid);
 
     /**
