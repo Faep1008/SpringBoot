@@ -4,7 +4,7 @@ if (!window.faep) {
 jQuery.extend(faep, (function (win, $) {
     return {
         execute: function (actionName, params, callback) {
-            if(params == null){
+            if (params == null) {
                 params = {};
             }
             var list = params;
@@ -38,6 +38,28 @@ jQuery.extend(faep, (function (win, $) {
             return jsonData;
         },
 
+        // 判断字符串是否为空
+        isEmpty: function (value) {
+            //正则表达式用于判斷字符串是否全部由空格或换行符组成
+            var reg = /^\s*$/
+            //返回值为true表示不是空字符串
+            return (value == null || value == undefined || reg.test(value));
+        },
+        // 校验手机号格式
+        isPhoneNum: function (phoneNum){
+            var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+            return myreg.test(phoneNum);
+        },
+        // 校验Email格式
+        isEmail: function (email){
+            var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            return myreg.test(email);
+        },
+        // 校验日期格式
+        isDate: function (date){
+            var myreg = /^(\d{4})-(\d{2})-(\d{2})$/;
+            return myreg.test(date);
+        },
         alert: function (tip) {
             $("#tipModal").remove();
             var html = "<div class=\"modal fade\" id=\"tipModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n" +

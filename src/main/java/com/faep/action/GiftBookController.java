@@ -127,7 +127,7 @@ public class GiftBookController
         for (GiftBookItem item : list) {
             allMoney = allMoney.add(item.getMoney());
         }
-        return "总人数：" + list.size() + " ， 总金额：" + allMoney.toPlainString();
+        return " 总人数：" + list.size() + "， 总金额(￥)：" + allMoney.toPlainString();
     }
 
 }

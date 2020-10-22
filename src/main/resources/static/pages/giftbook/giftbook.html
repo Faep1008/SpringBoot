@@ -14,11 +14,16 @@
             width: 90%;
             margin-left: 5%;
         }
+        th{
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
 <div id="container">
-    <div style="padding-top: 10px;">
+    <div style="padding-top: 10px;" id="toolbar">
         <form class="form-inline my-2 my-lg-0">
             <div class="form-group mb-2">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
@@ -39,18 +44,19 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group mb-2" style="width: 500px; margin-left: 20px;">
-                <span id="giftnametext"></span>
-            </div>
-            <div class="form-group mb-2">
+            <div class="form-group mb-2 " style="margin-left: 40%;">
                 <input type="text" id="search_username" class="form-control mr-sm-2" placeholder="输入姓名搜索">
                 <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchName()" type="button">搜索</button>
             </div>
         </form>
     </div>
-
-    <div style="">
-        <table class="table table-striped table-bordered table-hover">
+    <div id="tablecaption" style="text-align: center; font-size: 18px; height: 50px;">
+        <div class="alert alert-success" role="alert" style="height: 50px;">
+            <h6 class="alert-heading"><span id="giftnametext"></span></h6>
+        </div>
+    </div>
+    <div id="tabletitle" style="margin-top: 5px;">
+        <table class="table table-striped table-bordered table-hover" style="background-color: #00A1CB; color: white;">
             <thead>
             <tr>
                 <th scope="col" style="width: 80px; text-align: center">序号</th>
@@ -61,6 +67,10 @@
                 <th scope="col" style="width: 80px;text-align: center">修改</th>
             </tr>
             </thead>
+        </table>
+    </div>
+    <div style="overflow: auto; width: 100%; margin-top: -18px; " id="datalist">
+        <table class="table table-striped table-bordered table-hover">
             <tbody id="bookitem-list">
 
             </tbody>
@@ -126,7 +136,14 @@
 
     $(function () {
         initGiftbooks();
+        resizetableheight();
+        $(window).resize(resizetableheight());
     })
+    function resizetableheight() {
+        var he = $(window).height() - $("#tabletitle").height() -
+            $("#toolbar").height() - $("#tablecaption").height() - 50;
+        $("#datalist").height(he);
+    }
 
     function initGiftbooks() {
         faep.execute("giftbook/findallbookmain", null, function (ret) {
@@ -141,6 +158,7 @@
         // 刷新表格
         faep.execute("giftbook/findbookitems", faep.setParams(["bookguid", "username"]), function (ret) {
             $("#bookitem-list").empty();
+            resizetableheight();
             var data = {"bookitems": ret};
             var userListHtml = htmlRender($("#giftbookitems-template").html(), data);
             $("#bookitem-list").html(userListHtml);
@@ -188,14 +206,14 @@
 
         faep.execute("giftbook/getgiftbookinfo", faep.setParams(["bookguid"]), function (ret) {
             // 刷新文本区域
-            $("#giftnametext").html("<b>" + bookname + "</b>, 日期：" + occrdate + ", " + ret);
+            $("#giftnametext").html("<font size='4'><b>《" + bookname + "》</b> 日期：" + occrdate + ", " + ret + "</font>");
         });
 
         searchName();
     }
 
     function searchName() {
-        if(!curGiftBookGuid){
+        if (!curGiftBookGuid) {
             faep.alert("先选择礼簿！");
             return;
         }
@@ -256,12 +274,12 @@
 <script type="text/x-template" id="giftbookitems-template">
     {{#bookitems}}
     <tr>
-        <td scope="row" style="text-align: center">{{ordernum}}</td>
-        <td style="text-align: center">{{username}}</td>
-        <td style="text-align: center">{{money}}</td>
-        <td>{{uppermoney}}</td>
+        <td scope="row" style="text-align: center; width: 80px">{{ordernum}}</td>
+        <td style="text-align: center;width: 150px">{{username}}</td>
+        <td style="text-align: center;width: 120px">{{money}}</td>
+        <td style="width: 250px">{{uppermoney}}</td>
         <td>{{remark}}</td>
-        <td style="text-align: center">
+        <td style="text-align: center;width: 60px">
             <svg style="cursor: pointer;" onclick="edititem('{{itemguid}}', '{{username}}', '{{money}}', '{{remark}}')"
                  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">

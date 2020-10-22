@@ -17,8 +17,8 @@ public class User {
     private String password;
     private String phone;
     private Date lastlogintime;
-    private String roles;
     private String locked;
+    private String roles;
     private int ordernum;
     private String remark;
     private Date birthday;
@@ -27,15 +27,15 @@ public class User {
     public User() {
     }
 
-    public User(String rowguid, String username, String loginid, String password, String phone, Date lastlogintime, String roles, String locked, int ordernum, String remark, Date birthday, String email) {
+    public User(String rowguid, String username, String loginid, String password, String phone, Date lastlogintime, String locked, String roles, int ordernum, String remark, Date birthday, String email) {
         this.rowguid = rowguid;
         this.username = username;
         this.loginid = loginid;
         this.password = password;
         this.phone = phone;
         this.lastlogintime = lastlogintime;
-        this.roles = roles;
         this.locked = locked;
+        this.roles = roles;
         this.ordernum = ordernum;
         this.remark = remark;
         this.birthday = birthday;

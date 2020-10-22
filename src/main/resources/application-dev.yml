@@ -1,5 +1,8 @@
 server:
   port: 8099
+  servlet:
+    session:
+      timeout: 36000 #会话过期时间
 
 spring:
   datasource:

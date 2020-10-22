@@ -1,5 +1,6 @@
 package com.faep.action;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,11 +47,8 @@ public class UserController
     @PostMapping(value = "/adduser")
     public String adduser(@RequestBody User user) {
         user.setRowguid(UUID.randomUUID().toString());
-        user.setRoles("admin");
-//        user.setLastlogintime(null);
-//        user.setLocked(null);
-//        user.setRemark(null);
-//        user.setOrdernum((int)(Math.random()*10000));
+        user.setLastlogintime(new Date());
+        user.setOrdernum((int)(Math.random()*10000));
         userService.addNewUser(user);
         logger.info("新增用户成功！" + user.getUsername());
         return "OK";
