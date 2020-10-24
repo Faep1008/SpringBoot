@@ -83,4 +83,4 @@ frame:
     #无需登录就可访问的页面
     noNeedAuthPages: login/login;register/regist;
     #不需要登录就能访问的action方法
-    noNeedAuthActions: user/login;user/adduser;
+    noNeedAuthActions: user/login;user/adduser;user/sendloginvcode;user/loginbyvcode;
