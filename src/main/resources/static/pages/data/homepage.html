@@ -20,26 +20,51 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <li class="nav-item dropdown active" >
+                        <a class="nav-link dropdown-toggle" href="#" id="cd1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            菜单111
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="cd1">
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="">菜单11子菜单11</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="">菜单11子菜单22</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                    <li class="nav-item dropdown active" >
+                        <a class="nav-link dropdown-toggle" href="#" id="cd2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            菜单22
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="cd1">
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="">菜单22子菜单11</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="">菜单22子菜单22</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <li class="nav-item dropdown active" >
+                        <a class="nav-link dropdown-toggle" href="#" id="cd3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            菜单33
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="cd1">
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="">菜单33子菜单11</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="">菜单33子菜单22</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown active" >
+                        <a class="nav-link dropdown-toggle" href="#" id="cd4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             其他功能
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="cd4">
                             <a class="dropdown-item" href="javascript:void(0)" onclick="openurl('../giftbook/giftbook.html')">礼簿记录</a>
                             <a class="dropdown-item" href="javascript:void(0)" onclick="openurl('../exam/examlist.html')">考试系统</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
+
                 </ul>
                 <div class="form-inline my-2 my-lg-0" style="color: white">
                         <svg  style="cursor: pointer;" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bell" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
