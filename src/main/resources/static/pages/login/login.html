@@ -21,7 +21,7 @@
 <div style="position: absolute;top: 70px; left: 250px; z-index: 999"><img src="../images/logo.png"></div>
 <div class="loginarea">
     <div class="jumbotron">
-        <!--<h3 align="center" class="mb-4">用户登录</h3>-->
+        <h3 align="center" class="mb-4">登 录</h3>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
@@ -45,7 +45,7 @@
                     </svg>
                 </span>
                     </div>
-                    <input type="text" id="loginid" class="form-control" placeholder="输入登录名..."
+                    <input type="text" id="loginid" class="form-control" placeholder="输入登录名"
                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg-uname">
                 </div>
 
@@ -59,10 +59,10 @@
                     </svg>
                 </span>
                     </div>
-                    <input type="password" id="password" class="form-control" placeholder="输入登录密码..."
+                    <input type="password" id="password" class="form-control" placeholder="输入登录密码"
                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg-pwd">
                 </div>
-                <input type="button" value="登录" class="btn btn-primary btn-lg btn-block" onclick="login()">
+                <input type="button" value="登 录" class="btn btn-primary btn-lg btn-block" onclick="login()">
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="input-group input-group-lg mb-4">
@@ -75,7 +75,7 @@
                     </svg>
                 </span>
                     </div>
-                    <input type="text" id="phone" class="form-control" placeholder="输入手机号..."
+                    <input type="text" id="phone" class="form-control" placeholder="输入手机号"
                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg-phone">
                 </div>
 
@@ -89,14 +89,14 @@
                             </svg>
                         </span>
                     </div>
-                    <input type="text" id="verifycode" class="form-control" placeholder="输入验证码..."
+                    <input type="text" id="verifycode" class="form-control" placeholder="输入验证码"
                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg-code">
                     <button id="sendcodebtn" onclick="sendVCode()" class="btn btn-outline-success my-2 my-sm-0"
                             type="button"
                             style="margin-left: 3px;">发送验证码
                     </button>
                 </div>
-                <input type="button" value="登录" class="btn btn-primary btn-lg btn-block" onclick="loginbycode()">
+                <input type="button" value="登 录" class="btn btn-primary btn-lg btn-block" onclick="loginbycode()">
             </div>
         </div>
         <div style="text-align: right; margin-top: 10px; font-size: 16px;">
@@ -131,7 +131,9 @@
                 $("#sendcodebtn").text("已发送");
                 $("#sendcodebtn").attr("disabled", "true");
             }
-            faep.alert(ret);
+            else{
+                faep.alert(ret);
+            }
         });
     }
 
