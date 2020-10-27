@@ -2,6 +2,7 @@ package com.faep.j2ee.test;
 
 import com.aliyuncs.exceptions.ClientException;
 import com.faep.common.utils.MoneyUtils;
+import com.faep.common.utils.PwdUtils;
 import com.faep.common.utils.SmsUtils;
 import org.junit.Test;
 
@@ -42,6 +43,12 @@ public class UtilTest {
             String ret = String.format("%04d",new Random().nextInt(9999));
             System.out.println(ret);
         }
+    }
+
+    @Test
+    public void testPwd(){
+
+        PwdUtils.pwdFormatValid("aaaa");
     }
 
 }

@@ -159,7 +159,8 @@ public class UserController
         }
 
         // 判断是否可以生成验证码
-        if (verifyCode != null && !smsService.isCanSendSms(verifyCode.getVerifycode(), verifyCode.getCodegeneratetime())) {
+        if (verifyCode != null
+                && !smsService.isCanSendSms(verifyCode.getVerifycode(), verifyCode.getCodegeneratetime())) {
             return "验证码已发送，请勿重新发送！";
         }
         // 生成验证码
@@ -176,7 +177,7 @@ public class UserController
                 verifyCode.setCodegeneratetime(new Date());
                 phoneVerifyCodeService.addNewPhoneVerifyCode(verifyCode);
             }
-            else{
+            else {
                 verifyCode.setVerifycode(newCode);
                 verifyCode.setCodegeneratetime(new Date());
                 phoneVerifyCodeService.updatePhoneVerifyCodeByPhone(verifyCode);
@@ -201,14 +202,17 @@ public class UserController
             return "用户不存在，请先注册！";
         }
         PhoneVerifyCode verifyCodeDB = phoneVerifyCodeService.findPhoneVerifyCode(verifyCode.getPhone());
-        boolean isPass = smsService.isCodeValidPass(verifyCode.getVerifycode(), verifyCodeDB.getVerifycode(), verifyCodeDB.getCodegeneratetime());
+        boolean isPass = smsService.isCodeValidPass(verifyCode.getVerifycode(), verifyCodeDB.getVerifycode(),
+                verifyCodeDB.getCodegeneratetime());
         if (isPass) {
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
             logger.info(userDB.getUsername() + " 用户登录成功[手机验证码]！");
             return "OK";
         }
-        return "手机号或验证码不正确！";
+        else {
+            return "验证码不正确或已失效，请重新发送";
+        }
     }
 
 }
