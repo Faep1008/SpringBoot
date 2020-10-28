@@ -1,8 +1,7 @@
 package com.faep.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
-import com.faep.filter.WebFilter;
-import com.faep.vo.DruidConfigVo;
+import com.faep.vo.config.DruidConfigVo;
 import org.atmosphere.cpr.AtmosphereServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

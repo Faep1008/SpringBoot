@@ -3,7 +3,10 @@ package com.faep.j2ee.test;
 import com.aliyuncs.exceptions.ClientException;
 import com.faep.common.utils.MoneyUtils;
 import com.faep.common.utils.PwdUtils;
+import com.faep.common.utils.SM4Utils;
 import com.faep.common.utils.SmsUtils;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.bouncycastle.pqc.math.linearalgebra.ByteUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -48,7 +51,20 @@ public class UtilTest {
     @Test
     public void testPwd(){
 
-        PwdUtils.pwdFormatValid("aaaa");
+        String ret = PwdUtils.encrypt("FAEPFABJ");
+        System.out.println(ret);
+        byte[] b = ByteUtils.fromHexString(ret);
+        System.out.println(b);
+    }
+
+    @Test
+    public void testSM4(){
+        String ret1 = SM4Utils.encryptEcb("ojjdzashwsgnbahg");
+        System.out.println(ret1);
+
+        String ret = SM4Utils.decryptEcb(ret1);
+        System.out.println(ret);
+
     }
 
 }

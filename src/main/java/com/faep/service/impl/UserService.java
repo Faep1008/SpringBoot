@@ -1,12 +1,13 @@
 package com.faep.service.impl;
 
-import com.faep.entity.User;
-import com.faep.mapper.UserMapper;
-import com.faep.service.api.IUserService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.faep.entity.User;
+import com.faep.mapper.UserMapper;
+import com.faep.service.api.IUserService;
 
 /**
  * 描述： 用户service实现类
@@ -16,7 +17,8 @@ import java.util.List;
  * 版权： Faep
  */
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService
+{
 
     @Autowired
     @SuppressWarnings("all")
@@ -55,5 +57,10 @@ public class UserService implements IUserService {
     @Override
     public User findUserByPhone(String phone) {
         return userMapper.findUserByPhone(phone);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userMapper.findUserByEmail(email);
     }
 }

@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.faep.entity.EmailVerifyCode;
 import com.faep.entity.PhoneVerifyCode;
 import com.faep.entity.User;
-import com.faep.service.api.IPhoneVerifyCodeService;
-import com.faep.service.api.ISmsService;
-import com.faep.service.api.IUserService;
+import com.faep.service.api.*;
 
 /**
  * 测试Controller
@@ -44,6 +43,10 @@ public class UserController
     IPhoneVerifyCodeService phoneVerifyCodeService;
     @Autowired
     ISmsService smsService;
+    @Autowired
+    IEmailVerifyCodeService emailVerifyCodeService;
+    @Autowired
+    IEMailService emailService;
 
     private static String loginTemplateCode = "SMS_205130909";
     private static String registTemplateCode = "SMS_205120971";
@@ -187,7 +190,7 @@ public class UserController
     }
 
     /**
-     * 验证码登录校验验证码
+     * 手机验证码登录校验验证码
      * 
      * @return
      */
@@ -203,6 +206,74 @@ public class UserController
         }
         PhoneVerifyCode verifyCodeDB = phoneVerifyCodeService.findPhoneVerifyCode(verifyCode.getPhone());
         boolean isPass = smsService.isCodeValidPass(verifyCode.getVerifycode(), verifyCodeDB.getVerifycode(),
+                verifyCodeDB.getCodegeneratetime());
+        if (isPass) {
+            HttpSession session = request.getSession();
+            session.setAttribute("username", userDB.getUsername());
+            logger.info(userDB.getUsername() + " 用户登录成功[手机验证码]！");
+            return "OK";
+        }
+        else {
+            return "验证码不正确或已失效，请重新发送";
+        }
+    }
+
+    @PostMapping("/sendemailcode")
+    public String sendEmailVerifyCode(@RequestBody User user) {
+        String email = user.getEmail();
+        if (StringUtils.isEmpty(email)) {
+            return "邮箱不能为空！";
+        }
+        User userDB = userService.findUserByEmail(email);
+        if (userDB == null) {
+            return "此邮箱未注册！";
+        }
+        EmailVerifyCode verifyCode = emailVerifyCodeService.findEmailVerifyCode(email);
+        // 判断是否可以生成验证码
+        if (verifyCode != null
+                && !smsService.isCanSendSms(verifyCode.getEmailcode(), verifyCode.getCodegeneratetime())) {
+            return "验证码已发送，请勿重新发送！";
+        }
+        // 生成验证码
+        String newCode = smsService.generateVerifyCode();
+        // 发送
+        String ret = emailService.sendEmailMsg(email, "验证码", "验证码是：" + newCode + "，10分钟内有效，请勿泄露他人！");
+        if ("OK".equals(ret)) {
+            // 发送成功记录入库
+            if (verifyCode == null) {
+                verifyCode = new EmailVerifyCode();
+                verifyCode.setRowguid(UUID.randomUUID().toString());
+                verifyCode.setEmail(email);
+                verifyCode.setEmailcode(newCode);
+                verifyCode.setCodegeneratetime(new Date());
+                emailVerifyCodeService.addNewEmailVerifyCode(verifyCode);
+            }
+            else {
+                verifyCode.setEmailcode(newCode);
+                verifyCode.setCodegeneratetime(new Date());
+                emailVerifyCodeService.updateEmailVerifyCodeByEmail(verifyCode);
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * 验证码登录校验验证码
+     *
+     * @return
+     */
+    @PostMapping(value = "/loginbyemailcode")
+    public String loginByEmailCode(@RequestBody EmailVerifyCode verifyCode, HttpServletRequest request) {
+        if (StringUtils.isEmpty(verifyCode.getEmail()) || StringUtils.isEmpty(verifyCode.getEmailcode())) {
+            return "邮箱或验证码不能为空！";
+        }
+        // 获取用户
+        User userDB = userService.findUserByEmail(verifyCode.getEmail());
+        if (userDB == null) {
+            return "用户不存在，请先注册！";
+        }
+        EmailVerifyCode verifyCodeDB = emailVerifyCodeService.findEmailVerifyCode(verifyCode.getEmail());
+        boolean isPass = smsService.isCodeValidPass(verifyCode.getEmailcode(), verifyCodeDB.getEmailcode(),
                 verifyCodeDB.getCodegeneratetime());
         if (isPass) {
             HttpSession session = request.getSession();

@@ -25,13 +25,13 @@ spring:
       min-evictable-idle-time-millis: 30000
       filters: stat
       async-init: true
-#  resources:
-#    static-locations: classpath:/static   #访问静态页面
+  #  resources:
+  #    static-locations: classpath:/static   #访问静态页面
   mvc:
     static-path-pattern: /**
-#    view:
-#      suffix: .html
-#      prefix: /pages/
+  #    view:
+  #      suffix: .html
+  #      prefix: /pages/
   quartz:
     #相关属性配置
     properties:
@@ -53,6 +53,14 @@ spring:
     password: 11111
     publisher-confirms: true
     virtual-host: /
+
+  mail:
+    host: smtp.qq.com
+    username: faep@qq.com
+    password: ojjdzashwsgnbahg
+    protocol: smtp
+    default-encoding: UTF-8
+
 
 ## 该配置节点为独立的节点，如果将这个配置放在spring的节点下，会导致配置无法被识别
 mybatis:
@@ -83,4 +91,4 @@ frame:
     #无需登录就可访问的页面
     noNeedAuthPages: login/login;register/regist;
     #不需要登录就能访问的action方法
-    noNeedAuthActions: user/login;user/adduser;user/sendloginvcode;user/loginbyvcode;
+    noNeedAuthActions: user/login;user/adduser;user/sendloginvcode;user/loginbyvcode;user/sendemailcode;user/loginbyemailcode;

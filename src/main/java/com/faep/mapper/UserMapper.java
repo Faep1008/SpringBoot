@@ -1,9 +1,10 @@
 package com.faep.mapper;
 
-import com.faep.entity.User;
+import java.util.List;
+
 import org.apache.ibatis.annotations.*;
 
-import java.util.List;
+import com.faep.entity.User;
 
 /**
  * 描述： 用户Mapper
@@ -13,7 +14,8 @@ import java.util.List;
  * 版权： Faep
  */
 @Mapper
-public interface UserMapper {
+public interface UserMapper
+{
 
     /**
      * 新增一个用户
@@ -47,6 +49,7 @@ public interface UserMapper {
 
     /**
      * 根据登录名获取用户
+     * 
      * @param loginid
      * @return
      */
@@ -55,9 +58,19 @@ public interface UserMapper {
 
     /**
      * 根据手机号获取用户
+     * 
      * @param phone
      * @return
      */
     @Select("select * from user where phone=#{phone}")
     User findUserByPhone(String phone);
+
+    /**
+     * 根据邮箱获取用户
+     * 
+     * @param phone
+     * @return
+     */
+    @Select("select * from user where email=#{email}")
+    User findUserByEmail(String email);
 }

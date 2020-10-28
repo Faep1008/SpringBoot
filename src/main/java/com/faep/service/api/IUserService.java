@@ -1,8 +1,8 @@
 package com.faep.service.api;
 
-import com.faep.entity.User;
-
 import java.util.List;
+
+import com.faep.entity.User;
 
 /**
  * 描述： 用户service接口
@@ -11,9 +11,11 @@ import java.util.List;
  * 版本： [1.0, 2020/6/18]
  * 版权： Faep
  */
-public interface IUserService {
+public interface IUserService
+{
     /**
      * 新增一个用户
+     * 
      * @param user
      * @return
      */
@@ -21,6 +23,7 @@ public interface IUserService {
 
     /**
      * 删除一个用户
+     * 
      * @param rowguid
      * @return
      */
@@ -28,6 +31,7 @@ public interface IUserService {
 
     /**
      * 修改用户密码
+     * 
      * @param user
      * @return
      */
@@ -35,6 +39,7 @@ public interface IUserService {
 
     /**
      * 根据用户Guid查询一个用户
+     * 
      * @param rowguid
      * @return
      */
@@ -42,12 +47,14 @@ public interface IUserService {
 
     /**
      * 查询所有用户
+     * 
      * @return
      */
     List<User> findAllUsers();
 
     /**
      * 根据登录名获取用户
+     * 
      * @param loginid
      * @return
      */
@@ -55,8 +62,17 @@ public interface IUserService {
 
     /**
      * 根据手机号获取用户
+     * 
      * @param phone
      * @return
      */
     User findUserByPhone(String phone);
+
+    /**
+     * 根据邮箱获取用户
+     * 
+     * @param phone
+     * @return
+     */
+    User findUserByEmail(String email);
 }
