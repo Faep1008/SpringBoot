@@ -237,7 +237,7 @@ public class UserController
         // 生成验证码
         String newCode = smsService.generateVerifyCode();
         // 发送
-        String ret = emailService.sendEmailMsg(email, "验证码", "验证码是：" + newCode + "，10分钟内有效，请勿泄露他人！");
+        String ret = emailService.sendEmailMsg(email, "【PJ系统】验证码", "验证码是：" + newCode + "，10分钟内有效，请勿泄露他人！");
         if ("OK".equals(ret)) {
             // 发送成功记录入库
             if (verifyCode == null) {

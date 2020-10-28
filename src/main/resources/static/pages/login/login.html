@@ -165,12 +165,16 @@
             faep.alert("手机号不能为空！");
             return;
         }
+        $("#sendcodebtn").attr("disabled", "true");
+        $("#sendcodebtn").text("正在发送...");
         faep.execute("user/sendloginvcode", faep.setParams(["phone"]), function (ret) {
             if (ret == 'OK') {
                 $("#sendcodebtn").text("已发送");
                 $("#sendcodebtn").attr("disabled", "true");
             } else {
                 faep.alert(ret);
+                $("#sendcodebtn").text("发送验证码");
+                $("#sendcodebtn").removeAttr("disabled");
             }
         });
     }
@@ -202,12 +206,14 @@
             return;
         }
         $("#sendemailcodebtn").attr("disabled", "true");
+        $("#sendemailcodebtn").text("正在发送...");
         faep.execute("user/sendemailcode", faep.setParams(["email"]), function (ret) {
             if (ret == 'OK') {
                 $("#sendemailcodebtn").text("已发送");
                 $("#sendemailcodebtn").attr("disabled", "true");
             } else {
                 faep.alert(ret);
+                $("#sendemailcodebtn").text("发送验证码");
                 $("#sendemailcodebtn").removeAttr("disabled");
             }
         });
