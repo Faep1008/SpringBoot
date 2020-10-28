@@ -57,11 +57,11 @@ spring:
   mail:
     host: smtp.qq.com
     username: faep@qq.com
-    password: ojjdzashwsgnbahg
+    password: xxxxxxxxxxx
     protocol: smtp
     default-encoding: UTF-8
 
-
+## mailpwdojjdzashwsgnbahg
 ## 该配置节点为独立的节点，如果将这个配置放在spring的节点下，会导致配置无法被识别
 mybatis:
   #mapper-locations: classpath:mapping/*.xml #注意：一定要对应mapper映射xml文件的所在路径
