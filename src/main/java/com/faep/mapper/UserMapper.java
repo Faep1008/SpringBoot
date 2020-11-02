@@ -32,7 +32,13 @@ public interface UserMapper
     /**
      * 修改用户密码
      */
-    @Update("update user set password=#{password} where rowguid=#{rowguid}")
+    @Update("update user set password=#{password} where loginid=#{loginid}")
+    int updateUserPwd(User user);
+
+    /**
+     * 修改用户基本信息
+     */
+    @Update("update user set phone=#{phone}, email=#{email}, birthday=#{birthday} where loginid=#{loginid}")
     int updateUserInfo(User user);
 
     /**

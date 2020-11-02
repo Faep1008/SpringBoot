@@ -88,6 +88,7 @@ public class UserController
         if (userDB.getPassword().equals(user.getPassword())) {
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
+            session.setAttribute("loginid", userDB.getLoginid());
             logger.info(user.getLoginid() + " 用户登录成功[账号密码]！");
             return "OK";
         }
@@ -144,6 +145,40 @@ public class UserController
             userName = "未登录";
         }
         return userName;
+    }
+
+    /**
+     * 根据登录名查询用户
+     * 
+     * @return
+     */
+    @PostMapping(value = "/finduserbyloginid")
+    public User findUserByLoginID(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String loginid = (String) session.getAttribute("loginid");
+        if (!StringUtils.isEmpty(loginid)) {
+            return userService.findUserByLoginId(loginid);
+        }
+        return new User();
+    }
+
+    /**
+     * 更新用户信息
+     * 
+     * @param user
+     * @return
+     */
+    @PostMapping(value = "/updateuser")
+    public String updateUser(@RequestBody User user) {
+        // 修改密码
+        if (!StringUtils.isEmpty(user.getPassword())) {
+            userService.updateUserPwd(user);
+        }
+        else {
+            // 修改基本信息
+            userService.updateUserInfo(user);
+        }
+        return "OK";
     }
 
     /**
@@ -210,6 +245,7 @@ public class UserController
         if (isPass) {
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
+            session.setAttribute("loginid", userDB.getLoginid());
             logger.info(userDB.getUsername() + " 用户登录成功[手机验证码]！");
             return "OK";
         }
@@ -278,6 +314,7 @@ public class UserController
         if (isPass) {
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
+            session.setAttribute("loginid", userDB.getLoginid());
             logger.info(userDB.getUsername() + " 用户登录成功[手机验证码]！");
             return "OK";
         }

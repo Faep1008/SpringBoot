@@ -35,6 +35,11 @@ public class UserService implements IUserService
     }
 
     @Override
+    public int updateUserPwd(User user) {
+        return userMapper.updateUserPwd(user);
+    }
+
+    @Override
     public int updateUserInfo(User user) {
         return userMapper.updateUserInfo(user);
     }

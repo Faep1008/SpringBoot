@@ -31,6 +31,14 @@ public interface IUserService
 
     /**
      * 修改用户密码
+     *
+     * @param user
+     * @return
+     */
+    int updateUserPwd(User user);
+
+    /**
+     * 修改用户基本信息
      * 
      * @param user
      * @return
