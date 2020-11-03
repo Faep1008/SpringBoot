@@ -30,9 +30,9 @@ public class UtilTest {
 
     @Test
     public void testSendSms(){
-        //String ret = SmsUtils.sendSms("18862610997", "6789");
-        SmsUtils.querySms("18862610997");
-        //System.out.println("单元测试执行结果：" + ret);
+        String ret = SmsUtils.sendSms("1888888", "6789", "798");
+        //SmsUtils.querySms("18888888");
+        System.out.println("单元测试执行结果：" + ret);
     }
 
     /**
