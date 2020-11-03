@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.faep.common.utils.PwdUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class UserController
             logger.info(user.getLoginid() + " 无此用户！登录失败！");
             return "无此用户！请注册！";
         }
-        if (userDB.getPassword().equals(user.getPassword())) {
+        if (PwdUtils.encrypt(user.getPassword()).equals(userDB.getPassword())) {
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
             session.setAttribute("loginid", userDB.getLoginid());
@@ -186,6 +187,7 @@ public class UserController
     public String updateUser(@RequestBody User user) {
         // 修改密码
         if (!StringUtils.isEmpty(user.getPassword())) {
+            user.setPassword(PwdUtils.encrypt(user.getPassword()));
             userService.updateUserPwd(user);
         }
         else {

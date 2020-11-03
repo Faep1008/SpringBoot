@@ -49,7 +49,7 @@ public class UtilTest {
     @Test
     public void testPwd(){
 
-        String ret = PwdUtils.encrypt("FAEPFABJ");
+        String ret = PwdUtils.encrypt("11111");
         System.out.println(ret);
         byte[] b = ByteUtils.fromHexString(ret);
         System.out.println(b);
