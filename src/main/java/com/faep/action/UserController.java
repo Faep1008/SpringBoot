@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.faep.common.enums.LoginType;
+import com.faep.common.utils.PCUtils;
 import com.faep.entity.EmailVerifyCode;
+import com.faep.entity.LoginRecord;
 import com.faep.entity.PhoneVerifyCode;
 import com.faep.entity.User;
 import com.faep.service.api.*;
@@ -47,6 +50,8 @@ public class UserController
     IEmailVerifyCodeService emailVerifyCodeService;
     @Autowired
     IEMailService emailService;
+    @Autowired
+    ILoginRecordService loginRecordService;
 
     private static String loginTemplateCode = "SMS_205130909";
     private static String registTemplateCode = "SMS_205120971";
@@ -89,7 +94,16 @@ public class UserController
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
             session.setAttribute("loginid", userDB.getLoginid());
+            session.setAttribute("userguid", userDB.getRowguid());
             logger.info(user.getLoginid() + " 用户登录成功[账号密码]！");
+            LoginRecord lr = new LoginRecord();
+            lr.setRowguid(UUID.randomUUID().toString());
+            lr.setUserguid(userDB.getRowguid());
+            lr.setLoginid(userDB.getLoginid());
+            lr.setLogindate(new Date());
+            lr.setLogintype(LoginType.AccountPwd.getType());
+            lr.setLoginip(PCUtils.getPCIP(request));
+            loginRecordService.addNewRecord(lr);
             return "OK";
         }
         else {
@@ -246,7 +260,16 @@ public class UserController
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
             session.setAttribute("loginid", userDB.getLoginid());
+            session.setAttribute("userguid", userDB.getRowguid());
             logger.info(userDB.getUsername() + " 用户登录成功[手机验证码]！");
+            LoginRecord lr = new LoginRecord();
+            lr.setRowguid(UUID.randomUUID().toString());
+            lr.setUserguid(userDB.getRowguid());
+            lr.setLoginid(userDB.getPhone());
+            lr.setLogindate(new Date());
+            lr.setLogintype(LoginType.PhoneCode.getType());
+            lr.setLoginip(PCUtils.getPCIP(request));
+            loginRecordService.addNewRecord(lr);
             return "OK";
         }
         else {
@@ -315,7 +338,16 @@ public class UserController
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
             session.setAttribute("loginid", userDB.getLoginid());
+            session.setAttribute("userguid", userDB.getRowguid());
             logger.info(userDB.getUsername() + " 用户登录成功[手机验证码]！");
+            LoginRecord lr = new LoginRecord();
+            lr.setRowguid(UUID.randomUUID().toString());
+            lr.setUserguid(userDB.getRowguid());
+            lr.setLoginid(userDB.getEmail());
+            lr.setLogindate(new Date());
+            lr.setLogintype(LoginType.EmailCode.getType());
+            lr.setLoginip(PCUtils.getPCIP(request));
+            loginRecordService.addNewRecord(lr);
             return "OK";
         }
         else {

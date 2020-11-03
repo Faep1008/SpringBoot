@@ -1,14 +1,12 @@
 package com.faep.j2ee.test;
 
 import com.aliyuncs.exceptions.ClientException;
-import com.faep.common.utils.MoneyUtils;
-import com.faep.common.utils.PwdUtils;
-import com.faep.common.utils.SM4Utils;
-import com.faep.common.utils.SmsUtils;
+import com.faep.common.utils.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.bouncycastle.pqc.math.linearalgebra.ByteUtils;
 import org.junit.Test;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Random;
 
@@ -64,6 +62,11 @@ public class UtilTest {
 
         String ret = SM4Utils.decryptEcb(ret1);
         System.out.println(ret);
+
+    }
+
+    @Test
+    public void testPCUtils(){
 
     }
 
