@@ -3,6 +3,10 @@ package com.faep.service.impl;
 import java.util.Date;
 import java.util.Random;
 
+import com.faep.service.api.IFrameConfigService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -19,9 +23,25 @@ import com.faep.service.api.ISmsService;
 @Service
 public class SmsService implements ISmsService
 {
+
+    private static final Logger log = LoggerFactory.getLogger(SmsService.class);
+
+    @Autowired
+    IFrameConfigService frameConfigService;
+
+    private String ACCESSKEYID;
+    private String ACCESSKEYSECRET;
+
+    public SmsService(){
+        ACCESSKEYID = frameConfigService.findFrameConfigByKey("ACCESSKEYID");
+        ACCESSKEYSECRET = frameConfigService.findFrameConfigByKey("ACCESSKEYSECRET");
+        log.info("ACCESSKEYID=" + ACCESSKEYID);
+        log.info("ACCESSKEYSECRET=" + ACCESSKEYSECRET);
+    }
+
     @Override
     public String sendSms(String phone, String code, String templateCode) {
-        return SmsUtils.sendSms(phone, code, templateCode);
+        return SmsUtils.sendSms(phone, code, templateCode, ACCESSKEYID, ACCESSKEYSECRET);
     }
 
     @Override

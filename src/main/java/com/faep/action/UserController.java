@@ -7,7 +7,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.faep.common.utils.PwdUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.faep.common.enums.LoginType;
 import com.faep.common.utils.PCUtils;
+import com.faep.common.utils.PwdUtils;
 import com.faep.entity.EmailVerifyCode;
 import com.faep.entity.LoginRecord;
 import com.faep.entity.PhoneVerifyCode;
@@ -53,9 +53,8 @@ public class UserController
     IEMailService emailService;
     @Autowired
     ILoginRecordService loginRecordService;
-
-    private static String loginTemplateCode = "SMS_205130909";
-    private static String registTemplateCode = "SMS_205120971";
+    @Autowired
+    IFrameConfigService frameConfigService;
 
     /**
      * 用户注册
@@ -91,7 +90,7 @@ public class UserController
             logger.info(user.getLoginid() + " 无此用户！登录失败！");
             return "无此用户！请注册！";
         }
-        if (PwdUtils.encrypt(user.getPassword()).equals(userDB.getPassword())) {
+        if (PwdUtils.isPwdPass(user.getPassword(), userDB.getPassword())) {
             HttpSession session = request.getSession();
             session.setAttribute("username", userDB.getUsername());
             session.setAttribute("loginid", userDB.getLoginid());
@@ -219,6 +218,11 @@ public class UserController
         }
         // 生成验证码
         String newCode = smsService.generateVerifyCode();
+        // 获取验证码模版
+        String loginTemplateCode = frameConfigService.findFrameConfigByKey("loginTemplateCode");
+        if (StringUtils.isEmpty(loginTemplateCode)) {
+            return "系统参数未配置登录验证码模版！【loginTemplateCode】";
+        }
         // 发送
         String ret = smsService.sendSms(phone, newCode, loginTemplateCode);
         if ("OK".equals(ret)) {

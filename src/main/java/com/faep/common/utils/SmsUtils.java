@@ -27,9 +27,6 @@ import com.aliyuncs.profile.IClientProfile;
  */
 public class SmsUtils
 {
-
-    private static final String ACCESSKEYID = "LTAIOm7tnhYDwpFn";
-    private static final String ACCESSKEYSECRET = "jXdo1lKnL9GuDUlXVfOi0rEvFP0dgU";
     private static final String TIMEOUT = "10000";
     private static final String SIGNNAME = "PJ家庭管理系统";
     private static final String product = "Dysmsapi";// 短信API产品名称（短信产品名固定，无需修改）
@@ -45,7 +42,7 @@ public class SmsUtils
      * @param phoneNum
      * @param code
      */
-    public static String sendSms(String phoneNum, String code, String templateCode) {
+    public static String sendSms(String phoneNum, String code, String templateCode, String ACCESSKEYID, String ACCESSKEYSECRET) {
         // 设置超时时间-可自行调整
         System.setProperty("sun.net.client.defaultConnectTimeout", TIMEOUT);
         System.setProperty("sun.net.client.defaultReadTimeout", TIMEOUT);
@@ -107,7 +104,7 @@ public class SmsUtils
      * 
      * @param phoneNum
      */
-    public static void querySms(String phoneNum) {
+    public static void querySms(String phoneNum, String ACCESSKEYID, String ACCESSKEYSECRET) {
         // 设置超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", TIMEOUT);
         System.setProperty("sun.net.client.defaultReadTimeout", TIMEOUT);
