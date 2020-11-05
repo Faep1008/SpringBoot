@@ -3,7 +3,6 @@ package com.faep.service.impl;
 import java.util.Date;
 import java.util.Random;
 
-import com.faep.service.api.IFrameConfigService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.faep.common.utils.SmsUtils;
+import com.faep.entity.FrameConfig;
+import com.faep.service.api.IFrameConfigService;
 import com.faep.service.api.ISmsService;
 
 /**
@@ -32,9 +33,15 @@ public class SmsService implements ISmsService
     private String ACCESSKEYID;
     private String ACCESSKEYSECRET;
 
-    public SmsService(){
-        ACCESSKEYID = frameConfigService.findFrameConfigByKey("ACCESSKEYID");
-        ACCESSKEYSECRET = frameConfigService.findFrameConfigByKey("ACCESSKEYSECRET");
+    public SmsService() {
+        FrameConfig accesskeyid = frameConfigService.findFrameConfigByKey("ACCESSKEYID");
+        FrameConfig accesskeysecret = frameConfigService.findFrameConfigByKey("ACCESSKEYSECRET");
+        if (accesskeyid != null) {
+            ACCESSKEYID = accesskeyid.getValue();
+        }
+        if (accesskeysecret != null) {
+            ACCESSKEYSECRET = accesskeysecret.getValue();
+        }
         log.info("ACCESSKEYID=" + ACCESSKEYID);
         log.info("ACCESSKEYSECRET=" + ACCESSKEYSECRET);
     }
@@ -51,7 +58,7 @@ public class SmsService implements ISmsService
 
     @Override
     public boolean isVerifyCodeExpired(Date codeGenerateTime) {
-        if(codeGenerateTime == null){
+        if (codeGenerateTime == null) {
             return true;
         }
         Date now = new Date();

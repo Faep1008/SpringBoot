@@ -45,7 +45,7 @@ public class FrameConfigService implements IFrameConfigService
     }
 
     @Override
-    public String findFrameConfigByKey(String keyname) {
+    public FrameConfig findFrameConfigByKey(String keyname) {
         return frameConfigMapper.findFrameConfigByKey(keyname);
     }
 }

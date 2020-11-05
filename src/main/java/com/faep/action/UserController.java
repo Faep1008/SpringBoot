@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.faep.common.enums.LoginType;
 import com.faep.common.utils.PCUtils;
 import com.faep.common.utils.PwdUtils;
-import com.faep.entity.EmailVerifyCode;
-import com.faep.entity.LoginRecord;
-import com.faep.entity.PhoneVerifyCode;
-import com.faep.entity.User;
+import com.faep.entity.*;
 import com.faep.service.api.*;
 
 /**
@@ -219,12 +216,12 @@ public class UserController
         // 生成验证码
         String newCode = smsService.generateVerifyCode();
         // 获取验证码模版
-        String loginTemplateCode = frameConfigService.findFrameConfigByKey("loginTemplateCode");
-        if (StringUtils.isEmpty(loginTemplateCode)) {
+        FrameConfig loginTemplateCodeConfig = frameConfigService.findFrameConfigByKey("loginTemplateCode");
+        if (loginTemplateCodeConfig == null || StringUtils.isEmpty(loginTemplateCodeConfig.getValue())) {
             return "系统参数未配置登录验证码模版！【loginTemplateCode】";
         }
         // 发送
-        String ret = smsService.sendSms(phone, newCode, loginTemplateCode);
+        String ret = smsService.sendSms(phone, newCode, loginTemplateCodeConfig.getValue());
         if ("OK".equals(ret)) {
             // 发送成功记录入库
             if (verifyCode == null) {

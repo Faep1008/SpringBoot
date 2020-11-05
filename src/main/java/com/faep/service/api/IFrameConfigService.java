@@ -33,5 +33,5 @@ public interface IFrameConfigService
      */
     int updateFrameConfig(FrameConfig config);
 
-    String findFrameConfigByKey(String keyname);
+    FrameConfig findFrameConfigByKey(String keyname);
 }

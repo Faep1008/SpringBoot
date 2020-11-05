@@ -40,6 +40,6 @@ public interface FrameConfigMapper {
     @Update("update FrameConfig set value=#{value},remark=#{remark} where domain=#{domain} and keyname=#{keyname}")
     int updateFrameConfig(FrameConfig config);
 
-    @Select("select value from FrameConfig where keyname=#{keyname}")
-    String findFrameConfigByKey(String keyname);
+    @Select("select * from FrameConfig where keyname=#{keyname}")
+    FrameConfig findFrameConfigByKey(String keyname);
 }
