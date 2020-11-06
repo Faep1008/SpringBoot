@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+import com.faep.common.enums.ResultVO;
 import com.faep.common.utils.MoneyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -45,7 +46,7 @@ public class GiftBookController
     public String addNewBookMain(@RequestBody GiftBookMain bookMain) {
         bookMain.setBookguid(UUID.randomUUID().toString());
         giftBookMainService.addNewGiftBookMain(bookMain);
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
     /**
@@ -67,7 +68,7 @@ public class GiftBookController
     @PostMapping("/updatebookmain")
     public String updateBookMain(@RequestBody GiftBookMain bookMain) {
         giftBookMainService.updateGiftBookMain(bookMain);
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
     // **以下是礼簿主体具体项**********************************************************
@@ -83,7 +84,7 @@ public class GiftBookController
         bookItem.setItemguid(UUID.randomUUID().toString());
         bookItem.setUppermoney(MoneyUtils.number2CNMontrayUnit(bookItem.getMoney()));
         giftBookItemService.addNewGiftBookItem(bookItem);
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
     /**
@@ -112,7 +113,7 @@ public class GiftBookController
     public String updateBookItem(@RequestBody GiftBookItem bookItem) {
         bookItem.setUppermoney(MoneyUtils.number2CNMontrayUnit(bookItem.getMoney()));
         giftBookItemService.updateGiftItem(bookItem);
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
     /**

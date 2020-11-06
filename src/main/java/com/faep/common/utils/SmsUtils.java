@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import com.faep.common.enums.ResultVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,13 +91,13 @@ public class SmsUtils
             log.error("短信验证码发送异常！", e);
             return "Error";
         }
-        if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
+        if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals(ResultVO.成功.getValue())) {
             log.info(phoneNum + " 短信验证码发送成功！");
-            return "OK";
+            return ResultVO.成功.getValue();
         }
         System.out.println(phoneNum + " 短信发送失败：" + sendSmsResponse.getMessage() + "," + sendSmsResponse.getCode());
         log.info(phoneNum + " 短信发送失败：" + sendSmsResponse.getMessage() + "," + sendSmsResponse.getCode());
-        return "Error";
+        return ResultVO.失败.getValue();
     }
 
     /**

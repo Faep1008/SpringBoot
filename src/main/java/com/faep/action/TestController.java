@@ -1,5 +1,6 @@
 package com.faep.action;
 
+import com.faep.common.enums.ResultVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,7 @@ public class TestController
             });
             t.start();
         }
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
     /**
@@ -78,7 +79,7 @@ public class TestController
             }
         }).start();
 
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
 }

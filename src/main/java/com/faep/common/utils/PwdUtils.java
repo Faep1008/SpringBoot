@@ -1,5 +1,6 @@
 package com.faep.common.utils;
 
+import com.faep.common.enums.ResultVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.util.StringUtils;
 
@@ -53,7 +54,7 @@ public class PwdUtils
         if (password.length() < 5) {
             return "密码长度不能小于5位！";
         }
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
 }

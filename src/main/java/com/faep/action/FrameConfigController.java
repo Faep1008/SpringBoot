@@ -3,6 +3,7 @@ package com.faep.action;
 import java.util.List;
 import java.util.UUID;
 
+import com.faep.common.enums.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class FrameConfigController
     public String addNewConfig(FrameConfig config) {
         config.setRowguid(UUID.randomUUID().toString());
         frameConfigService.addNewFrameConfig(config);
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
     @PostMapping("/findall")
@@ -41,7 +42,7 @@ public class FrameConfigController
     @PostMapping("/updateconfig")
     public String updateFrameConfig(FrameConfig config) {
         frameConfigService.updateFrameConfig(config);
-        return "OK";
+        return ResultVO.成功.getValue();
     }
 
     @PostMapping("/findbykey")

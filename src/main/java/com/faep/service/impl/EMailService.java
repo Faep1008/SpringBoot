@@ -1,5 +1,6 @@
 package com.faep.service.impl;
 
+import com.faep.common.enums.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,11 +35,11 @@ public class EMailService implements IEMailService
             message.setSubject(title);
             message.setText(msg);
             javaMailSender.send(message);
-            return "OK";
+            return ResultVO.成功.getValue();
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "ERROR" + e.getMessage();
+            return ResultVO.失败.getValue() + e.getMessage();
         }
     }
 }
