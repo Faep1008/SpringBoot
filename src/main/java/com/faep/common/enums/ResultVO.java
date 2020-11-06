@@ -8,7 +8,7 @@ package com.faep.common.enums;
  * 版权： Faep
  */
 public enum ResultVO {
-    成功("OK"), 失败("Error");
+    SUCCESS("OK"), ERROR("Error");
     String status;
 
     ResultVO(String status) {

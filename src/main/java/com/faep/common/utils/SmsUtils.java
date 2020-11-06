@@ -91,13 +91,13 @@ public class SmsUtils
             log.error("短信验证码发送异常！", e);
             return "Error";
         }
-        if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals(ResultVO.成功.getValue())) {
+        if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals(ResultVO.SUCCESS.getValue())) {
             log.info(phoneNum + " 短信验证码发送成功！");
-            return ResultVO.成功.getValue();
+            return ResultVO.SUCCESS.getValue();
         }
         System.out.println(phoneNum + " 短信发送失败：" + sendSmsResponse.getMessage() + "," + sendSmsResponse.getCode());
         log.info(phoneNum + " 短信发送失败：" + sendSmsResponse.getMessage() + "," + sendSmsResponse.getCode());
-        return ResultVO.失败.getValue();
+        return ResultVO.ERROR.getValue();
     }
 
     /**

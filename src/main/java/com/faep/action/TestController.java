@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -42,7 +41,7 @@ public class TestController
             });
             t.start();
         }
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     /**
@@ -79,7 +78,7 @@ public class TestController
             }
         }).start();
 
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
 }

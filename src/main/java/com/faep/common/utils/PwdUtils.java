@@ -54,7 +54,7 @@ public class PwdUtils
         if (password.length() < 5) {
             return "密码长度不能小于5位！";
         }
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
 }

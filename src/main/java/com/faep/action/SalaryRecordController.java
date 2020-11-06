@@ -32,7 +32,7 @@ public class SalaryRecordController
     public String addNewSalaryRecord(@RequestBody SalaryRecord salaryRecord) {
         salaryRecord.setRowguid(UUID.randomUUID().toString());
         salaryRecordService.addNewSalaryRecord(salaryRecord);
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     @PostMapping("/findall")
@@ -56,7 +56,7 @@ public class SalaryRecordController
     @PostMapping("/update")
     public String updateSalaryRecord(@RequestBody SalaryRecord salaryRecord) {
         salaryRecordService.updateSalaryRecord(salaryRecord);
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
 }

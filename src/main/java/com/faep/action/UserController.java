@@ -66,7 +66,7 @@ public class UserController
         user.setOrdernum((int) (Math.random() * 10000));
         userService.addNewUser(user);
         logger.info("新增用户成功！" + user.getUsername());
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     /**
@@ -102,7 +102,7 @@ public class UserController
             lr.setLogintype(LoginType.AccountPwd.getType());
             lr.setLoginip(PCUtils.getPCIP(request));
             loginRecordService.addNewRecord(lr);
-            return ResultVO.成功.getValue();
+            return ResultVO.SUCCESS.getValue();
         }
         else {
             logger.info(user.getLoginid() + " 用户登录失败！");
@@ -135,7 +135,7 @@ public class UserController
             logger.info(session.getAttribute("username") + " 用户注销！");
             session.setAttribute("username", null);
             session.invalidate();
-            return ResultVO.成功.getValue();
+            return ResultVO.SUCCESS.getValue();
         }
         catch (Exception e) {
             logger.error("用户注销失败！", e);
@@ -191,7 +191,7 @@ public class UserController
             // 修改基本信息
             userService.updateUserInfo(user);
         }
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     /**
@@ -223,7 +223,7 @@ public class UserController
         }
         // 发送
         String ret = smsService.sendSms(phone, newCode, loginTemplateCodeConfig.getValue());
-        if (ResultVO.成功.getValue().equals(ret)) {
+        if (ResultVO.SUCCESS.getValue().equals(ret)) {
             // 发送成功记录入库
             if (verifyCode == null) {
                 verifyCode = new PhoneVerifyCode();
@@ -274,7 +274,7 @@ public class UserController
             lr.setLogintype(LoginType.PhoneCode.getType());
             lr.setLoginip(PCUtils.getPCIP(request));
             loginRecordService.addNewRecord(lr);
-            return ResultVO.成功.getValue();
+            return ResultVO.SUCCESS.getValue();
         }
         else {
             return "验证码不正确或已失效，请重新发送";
@@ -301,7 +301,7 @@ public class UserController
         String newCode = smsService.generateVerifyCode();
         // 发送
         String ret = emailService.sendEmailMsg(email, "【PJ系统】验证码", "验证码是：" + newCode + "，10分钟内有效，请勿泄露他人！");
-        if (ResultVO.成功.getValue().equals(ret)) {
+        if (ResultVO.SUCCESS.getValue().equals(ret)) {
             // 发送成功记录入库
             if (verifyCode == null) {
                 verifyCode = new EmailVerifyCode();
@@ -352,7 +352,7 @@ public class UserController
             lr.setLogintype(LoginType.EmailCode.getType());
             lr.setLoginip(PCUtils.getPCIP(request));
             loginRecordService.addNewRecord(lr);
-            return ResultVO.成功.getValue();
+            return ResultVO.SUCCESS.getValue();
         }
         else {
             return "验证码不正确或已失效，请重新发送";

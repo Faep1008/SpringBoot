@@ -35,11 +35,11 @@ public class EMailService implements IEMailService
             message.setSubject(title);
             message.setText(msg);
             javaMailSender.send(message);
-            return ResultVO.成功.getValue();
+            return ResultVO.SUCCESS.getValue();
         }
         catch (Exception e) {
             e.printStackTrace();
-            return ResultVO.失败.getValue() + e.getMessage();
+            return ResultVO.ERROR.getValue() + e.getMessage();
         }
     }
 }

@@ -46,7 +46,7 @@ public class GiftBookController
     public String addNewBookMain(@RequestBody GiftBookMain bookMain) {
         bookMain.setBookguid(UUID.randomUUID().toString());
         giftBookMainService.addNewGiftBookMain(bookMain);
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     /**
@@ -68,7 +68,7 @@ public class GiftBookController
     @PostMapping("/updatebookmain")
     public String updateBookMain(@RequestBody GiftBookMain bookMain) {
         giftBookMainService.updateGiftBookMain(bookMain);
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     // **以下是礼簿主体具体项**********************************************************
@@ -84,7 +84,7 @@ public class GiftBookController
         bookItem.setItemguid(UUID.randomUUID().toString());
         bookItem.setUppermoney(MoneyUtils.number2CNMontrayUnit(bookItem.getMoney()));
         giftBookItemService.addNewGiftBookItem(bookItem);
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     /**
@@ -113,7 +113,7 @@ public class GiftBookController
     public String updateBookItem(@RequestBody GiftBookItem bookItem) {
         bookItem.setUppermoney(MoneyUtils.number2CNMontrayUnit(bookItem.getMoney()));
         giftBookItemService.updateGiftItem(bookItem);
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     /**

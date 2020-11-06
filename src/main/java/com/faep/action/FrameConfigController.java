@@ -31,7 +31,7 @@ public class FrameConfigController
     public String addNewConfig(FrameConfig config) {
         config.setRowguid(UUID.randomUUID().toString());
         frameConfigService.addNewFrameConfig(config);
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     @PostMapping("/findall")
@@ -42,7 +42,7 @@ public class FrameConfigController
     @PostMapping("/updateconfig")
     public String updateFrameConfig(FrameConfig config) {
         frameConfigService.updateFrameConfig(config);
-        return ResultVO.成功.getValue();
+        return ResultVO.SUCCESS.getValue();
     }
 
     @PostMapping("/findbykey")
