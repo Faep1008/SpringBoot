@@ -129,6 +129,10 @@ public class SalaryRecord
      * 本期实发金额
      */
     private BigDecimal smountactuallysalary;
+    /**
+     * 关联的用户标识
+     */
+    private String userguid;
 
     public SalaryRecord() {
     }
@@ -363,5 +367,13 @@ public class SalaryRecord
 
     public void setSmountactuallysalary(BigDecimal smountactuallysalary) {
         this.smountactuallysalary = smountactuallysalary;
+    }
+
+    public String getUserguid() {
+        return userguid;
+    }
+
+    public void setUserguid(String userguid) {
+        this.userguid = userguid;
     }
 }

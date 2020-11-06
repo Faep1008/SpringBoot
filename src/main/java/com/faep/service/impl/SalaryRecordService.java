@@ -30,18 +30,18 @@ public class SalaryRecordService implements ISalaryRecordService
     }
 
     @Override
-    public List<SalaryRecord> findSalaryRecordByYear(String yearmonth) {
-        return salaryRecordMapper.findSalaryRecordByYear(yearmonth);
+    public List<SalaryRecord> findSalaryRecordByYear(String yearmonth, String userguid) {
+        return salaryRecordMapper.findSalaryRecordByYear(yearmonth, userguid);
     }
 
     @Override
-    public List<SalaryRecord> findAllSalaryRecords() {
-        return salaryRecordMapper.findAllSalaryRecords();
+    public List<SalaryRecord> findAllSalaryRecords(String userguid) {
+        return salaryRecordMapper.findAllSalaryRecords(userguid);
     }
 
     @Override
-    public SalaryRecord findOneSalaryRecordByYear(String yearmonth) {
-        return salaryRecordMapper.findOneSalaryRecordByYear(yearmonth);
+    public SalaryRecord findOneSalaryRecordByYear(String yearmonth, String userguid) {
+        return salaryRecordMapper.findOneSalaryRecordByYear(yearmonth, userguid);
     }
 
     @Override

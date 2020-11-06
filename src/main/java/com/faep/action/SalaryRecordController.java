@@ -3,18 +3,18 @@ package com.faep.action;
 import java.util.List;
 import java.util.UUID;
 
-import com.faep.common.enums.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.faep.common.enums.ResultVO;
 import com.faep.entity.SalaryRecord;
 import com.faep.service.api.ISalaryRecordService;
 
 /**
- * 描述： [ ]
+ * 描述： 工资管理后台Action
  * 作者： Faep
  * 创建时间： 2020-11-06 16:35
  * 版本： [1.0, 2020-11-06]
@@ -36,21 +36,21 @@ public class SalaryRecordController
     }
 
     @PostMapping("/findall")
-    public List<SalaryRecord> findAllSalaryRecords() {
+    public List<SalaryRecord> findAllSalaryRecords(@RequestBody String userguid) {
 
-        return salaryRecordService.findAllSalaryRecords();
+        return salaryRecordService.findAllSalaryRecords(userguid);
     }
 
     @PostMapping("/findbyyearmonth")
-    public SalaryRecord findSalaryRecordsByYearMonth(@RequestBody String yearmonth) {
+    public SalaryRecord findSalaryRecordsByYearMonth(@RequestBody String yearmonth, @RequestBody String userguid) {
 
-        return salaryRecordService.findOneSalaryRecordByYear(yearmonth);
+        return salaryRecordService.findOneSalaryRecordByYear(yearmonth, userguid);
     }
 
     @PostMapping("/findbyyear")
-    public List<SalaryRecord> findSalaryRecordsByYear(@RequestBody String year) {
+    public List<SalaryRecord> findSalaryRecordsByYear(@RequestBody String year, @RequestBody String userguid) {
 
-        return salaryRecordService.findSalaryRecordByYear(year);
+        return salaryRecordService.findSalaryRecordByYear(year, userguid);
     }
 
     @PostMapping("/update")

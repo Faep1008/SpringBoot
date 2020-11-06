@@ -16,11 +16,11 @@ public interface ISalaryRecordService
 
     int addNewSalaryRecord(SalaryRecord salaryRecord);
 
-    List<SalaryRecord> findSalaryRecordByYear(String yearmonth);
+    List<SalaryRecord> findSalaryRecordByYear(String yearmonth, String userguid);
 
-    List<SalaryRecord> findAllSalaryRecords();
+    List<SalaryRecord> findAllSalaryRecords(String userguid);
 
-    SalaryRecord findOneSalaryRecordByYear(String yearmonth);
+    SalaryRecord findOneSalaryRecordByYear(String yearmonth, String userguid);
 
     int updateSalaryRecord(SalaryRecord salaryRecord);
 }
