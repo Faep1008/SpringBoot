@@ -72,17 +72,21 @@
             </div>
             <div class="modal-body">
                 <form>
+                    <div class="form-group">
+                        <label for="domain">领域:</label>
+                        <select class="form-control" id="domain">
+                            <option>礼簿</option>
+                            <option>短信验证</option>
+                            <option>考试系统</option>
+                            <option>工资管理</option>
+                            <option>用户管理</option>
+                        </select>
+                    </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="domain" class="col-form-label">领域:</label>
-                            <input type="text" class="form-control" id="domain">
-                        </div>
                         <div class="form-group col-md-6">
                             <label for="keyname" class="col-form-label">参数名:</label>
                             <input type="text" class="form-control" id="keyname">
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="value" class="col-form-label">参数值:</label>
                             <input type="text" class="form-control" id="value">
@@ -96,14 +100,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" onclick="addFrameConfigs()">提交新增</button>
+                <button type="button" class="btn btn-primary" id="subBtn" onclick="addFrameConfigs()">提交新增</button>
             </div>
         </div>
     </div>
-</div>
-<div style="display: none">
-    <input type="text" id="bookguid">
-    <input type="text" id="itemguid">
 </div>
 
 <script src="../bootstrap-dist/js/bootstrap.js"></script>
@@ -126,7 +126,7 @@
 
     function initFrameConfigs() {
         // 刷新表格
-        faep.execute("frameconfig/findall", null, function (ret) {
+        faep.execute("frameconfig/findall", faep.setParams(['keyname']), function (ret) {
             $("#frameconfig-list").empty();
             resizetableheight();
             var data = {"frameconfigs": ret};
@@ -139,10 +139,9 @@
     var operateType;
 
     $('#exampleModal').on('show.bs.modal', function (event) {
-        $("#domain").val("");
-        $("#keyname").val("");
-        $("#value").val("");
-        $("#remark").val("");
+        clearform();
+
+        $("#subBtn").text("保存修改")
 
         var button = $(event.relatedTarget) // Button that triggered the modal
         var recipient = button.data('whatever') // Extract info from data-* attributes
@@ -154,33 +153,46 @@
     });
 
     function searchName() {
-        $("#username").val($("#search_username").val());
-        initGiftbookitems();
+        $("#keyname").val($("#search_username").val());
+        initFrameConfigs();
     }
 
     function addFrameConfigs() {
         if (operateType == 1){
             faep.execute("frameconfig/add", faep.setParams(["domain", "keyname", "value", "remark"]), function (ret) {
                 faep.alert(ret);
+                clearform();
+                initFrameConfigs();
+                operateType = null;
             });
         }
         else if(operateType == 2){
             faep.execute("frameconfig/updateconfig", faep.setParams(["domain", "keyname", "value", "remark"]), function (ret) {
                 faep.alert(ret);
+                clearform();
+                initFrameConfigs();
+                $("#subBtn").text("提交新增")
+                operateType = null;
+                $('#exampleModal').modal('hide');
             });
         }
     }
 
+    function clearform(){
+        $("#domain").val("");
+        $("#keyname").val("");
+        $("#value").val("");
+        $("#remark").val("");
+    }
+
     // 修改按钮
-    function editconfig(itemguid, username, money, remark) {
-        $("#bookitemform").show();
-        $("#bookmainform").hide();
+    function editconfig(domain,keyname,value,remark) {
         $('#exampleModal').modal('show');
         $('#exampleModal').find('.modal-title').text("修改信息");
 
-        $("#itemguid").val(itemguid);
-        $("#username").val(username);
-        $("#money").val(money);
+        $("#keyname").val(keyname);
+        $("#domain").val(domain);
+        $("#value").val(value);
         $("#remark").val(remark);
 
         operateType = 2;
@@ -195,7 +207,7 @@
         <td style="width: 250px">{{value}}</td>
         <td>{{remark}}</td>
         <td style="text-align: center;width: 60px">
-            <svg style="cursor: pointer;" onclick="edititem('{{itemguid}}')"
+            <svg style="cursor: pointer;" onclick="editconfig('{{domain}}','{{keyname}}','{{value}}','{{remark}}')"
                  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>

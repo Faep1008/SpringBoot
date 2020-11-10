@@ -42,4 +42,7 @@ public interface FrameConfigMapper {
 
     @Select("select * from FrameConfig where keyname=#{keyname}")
     FrameConfig findFrameConfigByKey(String keyname);
+
+    @Select("select * from FrameConfig where keyname like concat('%',#{keyname},'%') order by keyname")
+    List<FrameConfig> findFrameConfigsLikeKeyName(String keyname);
 }

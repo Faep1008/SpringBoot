@@ -33,7 +33,7 @@ public class SmsService implements ISmsService
     private String ACCESSKEYID;
     private String ACCESSKEYSECRET;
 
-    public SmsService() {
+    public void initData() {
         FrameConfig accesskeyid = frameConfigService.findFrameConfigByKey("ACCESSKEYID");
         FrameConfig accesskeysecret = frameConfigService.findFrameConfigByKey("ACCESSKEYSECRET");
         if (accesskeyid != null) {
@@ -48,6 +48,9 @@ public class SmsService implements ISmsService
 
     @Override
     public String sendSms(String phone, String code, String templateCode) {
+        if (StringUtils.isEmpty(ACCESSKEYID) || StringUtils.isEmpty(ACCESSKEYSECRET)) {
+            initData();
+        }
         return SmsUtils.sendSms(phone, code, templateCode, ACCESSKEYID, ACCESSKEYSECRET);
     }
 

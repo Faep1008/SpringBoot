@@ -34,4 +34,6 @@ public interface IFrameConfigService
     int updateFrameConfig(FrameConfig config);
 
     FrameConfig findFrameConfigByKey(String keyname);
+
+    List<FrameConfig> findFrameConfigsLikeKeyName(String keyname);
 }
